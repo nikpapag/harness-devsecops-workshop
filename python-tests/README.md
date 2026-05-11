@@ -49,16 +49,20 @@
 
 **Execution**
 
-- Select **Add Step**, then **Add Step** again, then select **Test Intelligence** from the Step Library and configure with the following
+- Select **Add Step**, then **Add Step** again, then select **Run Tests** from the Step Library and configure with the following
 
 
 
 | Input                        | Value                                      | Notes                                                                                                                                             |
 | ---------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Name                         |Run Tests With Intelligence|                                                                                                                                                   |                                   |
-| Command                  |pip install pytest & cd ./python-tests| The github repo is a monorepo with application(s) and configuration in the same repo. Therefore we need to navigate to the application subfolder. |                                                                                                                 |
-
-
+| Name                         |Run Tests With Intelligence|                                                                                                                                                   |
+| Language                     |Python|                                                                                                                                                   |
+| Build Tool                   |Pytest|                                                                                                                                                   |
+| Build Arguments              | Leave empty                                | Harness recognises the framework “pytest” and will fill in the gaps at runtime                                                                    |
+| Test Report Paths            | Leave empty                                | Harness automatically parses the current directory to identify test results                                                                       |
+| **Additional Configuration** |                                            |                                                                                                                                                   |
+| Pre-Command                  |pip install pytest & cd ./python-tests| The github repo is a monorepo with application(s) and configuration in the same repo. Therefore we need to navigate to the application subfolder. |
+| Run only selected tests      |Enabled| Activate Test Intelligence                                                                                                                        |
 
 - After completing configuration select **Apply Changes** from the top right of the configuration popup
 
@@ -87,8 +91,7 @@
 | Name              |Push to DockerHub|                                                                          |
 | Docker Connector  |dockerhub|                                                                          |
 | Docker Repository |nikpap/harness-workshop|                                                                          |
-| Tags              |<+variable.username>-<+pipeline.sequenceId>| This will be the tag of the image using harness expressions. Click on the pin and select expression and paste the value              |
-| **Optional  Configuration** |                                            |                                                                                                                                                   |
+| Tags              |<+variable.username>-<+pipeline.sequenceId>| This will be the tag of the image using harness expressions              |
 | Dockerfile        |/harness/frontend-app/harness-webapp/Dockerfile| This tells harness where is the Dockerfile for building the app          |
 | Context           |/harness/frontend-app/harness-webapp| This tells from where to run the instructions included in the dockerfile |
 
@@ -133,7 +136,7 @@
 
 7. Select **OWASP**
 
-8. Name the step **OWASP**
+8. Name the step OWASP
 
 9. Click **Save** and then click **Run** to execute the pipeline with the following inputs
 
@@ -197,23 +200,21 @@ After the **Build and Push** stage is complete, go to the **Security Tests** tab
 | Docker Registry Connector  |dockerhub|                                    |
 | Artifact Source Identifier |frontend|                                    |
 | Image Path                 |nikpap/harness-workshop|                                    |
-| Tag                        |<+variable.username>-<+pipeline.sequenceId>| Select value, then click on the pin and select expression and paste the value |
-
-- Click **Save** to close the service window and then click **Continue** to go to the Environment tab
+| Tag                        |<+variable.username>-<+pipeline.sequenceId>| _Select value, then click on the pin and select expression and paste the value |
 
 **Environment**
 
 The target infrastructure has been pre-created for us. The application will be deployed to a k8s cluster on the given namespace  
 
-- Click **- Select -** on the **"Specify Environment"** input box 
+- Click **- Select -** on the environment input box ****
 
-- Select **prod** environment and click **"Apply Selected"**
+- Select **prod** environment****
 
 | Input | Value | Notes                                                             |
 | ----- | ----- | ----------------------------------------------------------------- |
 | Name  |prod| Make sure to select the environment and infrastructure definition |
 
-- Click **- Select -** on the **"Specify Infrastructure"** input box
+- Click **- Select -** on the environment input box ****
 
 -  From the dropdown select k8s
 
@@ -223,11 +224,9 @@ The target infrastructure has been pre-created for us. The application will be d
 | ----- | ----- | ----- |
 | Name  |k8s|       |
 
-- Click **Continue** 
+**Execution**
 
-**Execution Strategies**
-
-- Select **Rolling** and click on **Use Strategy**, the frontend is a static application so no need to do canary.
+- Select **Rolling** and click on **Use Strategy**, the frontend is a static application so no need to do canary, new features will be managed by Feature Flags at a later stage of this lab
 
 
 # Lab 4 - Continuous Deploy - Backend
@@ -253,14 +252,12 @@ The target infrastructure has been pre-created for us. The application will be d
 7. Configure the **backend** Stage with the following\
    **Service**
 
-- Click **- Select -**  on the **"Select Service"** input box and configure as follows:
+- Click **Select Service** and configure as follows****
 
 
 | Input | Value       | Notes |
 | ----- | ----------- | ----- |
 | Name  |backend|       |
-
-- Click **Apply Selected** and then click **Continue** to go to the **"Environment"** tab
 
 **Environment**
 
@@ -270,19 +267,24 @@ The target infrastructure has been pre-created for us and we used it in the prev
 
 - Select **Stage \[frontend]**
 
-- Click **Continue**
-
 **Execution**
 
 - Select **Canary**  and click on **Use Strategy**
 
 - **After** the canary deployment and **before** the canary delete step add **Harness Approval** step according to the table  below
 
+| Input            | Value            | Notes |
+| ---------------- | ---------------- | ----- |
+| Step Name        |Approval|       |
+| Type of Approval |Harness Approval|       |
+
+- Configure the Approval step as follows
+
 | Input       | Value             | Notes |
 | ----------- | ----------------- | ----- |
 | Name        |Approval|       |
-| User Groups |All Project Users|     Select project to see the **"All Project Users"** option   |
-- Click **Apply Changes**
+| User Groups |All Project Users|       |
+
 
 8. Click **Save** and then click **Run** to execute the pipeline with the following inputs. As a bonus, save your inputs as an Input Set before executing (see below)
 
@@ -300,262 +302,127 @@ The target infrastructure has been pre-created for us and we used it in the prev
 
 10. Approve the canary deployment for the pipeline to complete
 
-# Lab 5 - Chaos Engineering
+# Lab 5 - Feature Flags
 
-
-### Summary: Fully integrated chaos experiments with the delivery process
+### Summary: Build and deploy your first feature flag 
 
 **Learning Objective(s):**
 
-- Auto generate chaos experiments on deployed services
-- Build a chaos experiments using a base fault (out of 200 OOTB faults)
-- Embed chaos engineering experiments into the deployment process
+- Create a Feature Flag
+
+- Create an SDK key
+
+- Deploy application that uses Flag/SDK Key
+
+- Toggle Feature Flag to enable/disable feature
+
+**Steps**
+
+![](https://lh7-us.googleusercontent.com/docsz/AD_4nXdxbh_5hgTG2CsE8Dp_5_BLB75OITfS-9xxW-xplPehdYbj38WMTloCOo4tbOAom9VRc65S99IB54w-TY7INiG6Bd8PMqvRs_EsTQHzKjCZTjnv8laP7XCEuf9_l3s8HV3UuxVsnTgzuZpkV6Fq-FVoqpHY5kSuQ3un7Xrssg?key=cRG2cvp_PHVW0KG2Gq6Y_A)
+
+**Create the SDK Key**  
+
+1. From the left hand side menu under Feature Flags,  select **environments**
+
+2. From the list select the prod environment
+
+3. Click **+ New SDK Key**, configure as follows and click **Create**
+
+| Input    | Value      | Notes |
+| -------- | ------     | ----- |
+| Name     |dk|       |
+| Key Type |client|       |
+
+4. Copy the secret to use later. Note that the key will be redacted once you leave the page.
+
+5. From the left hand side menu select Project settings
+
+6. From the resources available click on the **Variables** 
+
+7. Modify the sdk variable and copy in the key
+
+| Input | Value                               | Notes |
+| ----- | ----------------------------------- | ----- |
+| Name  |sdk|       |
+| Value | _SDK Key copied from previous step_ |       |
+
+4. Click **Save**
+
+********
+
+**Create the Flag**
+
+1. From the left hand menu, go to **Feature Flags** → **Feature Flags**
+
+2. Click **+ New Feature Flag,** configure as follows and click **Save and Close**.
+
+| Input                         | Value      | Notes |
+| ----------------------------- | --------------   | ----- |
+| Type                          |Boolean|       |
+| Name                          |webinarff|       |
+| **Variation Settings**        |                  |       |
+| Name (first one)              |Show Offer|       |
+| Name (second one)             |Hide Offer|       |
+| If the flag is Enabled, serve |Show Offer|       |
+
+3. Enable the flag by clicking on the **Flag is Disabled** button and click **Save**
+
+
+5. **Run** the pipeline created in previous steps
+
+6. **Approve canary deployment** before progressing to the next step
+
+**Change the Flag via the UI**
+
+1. From the left hand menu in Harness, go to **Feature Flags** → **Target Management**
+
+2. Select the target shown in the list. If target is not shown, create the target manually
+
+| Input      | Value     | Notes |
+| ---------- | --------- | ----- |
+| Name       |webinar|       |
+| Identifier |webinar|       |
+
+3. Click **Add Flag**, toggle **webinarff**, set the variation to **Show Offer**, then click on **Add 1 Flags**
+
+4. Note that your application now displays a special offer
+
+5. For your target, set the variation to **Hide Offer** and click **Save Chances**
+
+6. Note that your application now does NOT display the special offer
+
+# Lab 6 - Continuous Verification
+
+
+### Summary: Automate the verification of new releases 
+
+**Learning Objective(s):**
+
 - Add continuous verification to the deployed service
+
 - Automate release validation
 
 **Steps**
 
-1. From the module selection menu select **resilience testing**
+1. In the existing pipeline, within the Deploy backend stage **after** Canary Deployment and **before** the approval step click on the plus icon to add a new step
 
-<img width="733" height="402" alt="Screenshot 2026-03-06 at 08 14 35" src="https://github.com/user-attachments/assets/3d6bba05-4189-4c14-893b-cb75e270029d" />
-
-
-4. From the left hand menu, go to **Project Settings**
-5. From the available tiles select “Discovery”
-6. After expanding the side menu of the “DA-K8s” agent click on “Discover Now”
-
-  ![image](https://github.com/user-attachments/assets/be1a029d-9b4e-4971-9519-f284ba75c815)
-
-
-
-**Create Application Map**
-
-1. After discovery is complete double click on the agent “DA-K8s”
-
-   ![image](https://github.com/user-attachments/assets/3094b76d-1d27-429d-ab67-0fdb8e978894)
-
-
-1. Select the "Application Maps" tab
-2. Click on **Create New Application Map** and enter the following values
-
-| Input                        | Value|  
-| ---------------------------- | ------ |
-| Name                         |workshop-am|
-
-4. Select the relevant services for your project name "use the search function to find the services"
-5. Click Save
-
-
-**Auto Generate Chaos Experiments**
-1. From left handside menu select **Resilience Management**
-2. Drill down to the previously created application map
-3. Navigate to **Chaos Experiments**
-4. Select **Only a few**
-
-Observe the auto generated experiments and run the **web-backend experiment**
-
-
-
-
----------------
-
-**Create Experiments manually**
-
-This time we will create a network corruption experiment
-
-1. From the left hand menu, go to **Chaos Testing**
-2. Select **+New Experiment**
-
-| Input                        | Value|  
-| ---------------------------- | ------ |
-| Name                         |network-corruption|
-
-3. Select **Harness Infra**
-
-  ![Screenshot 2024-11-28 at 14 24 21](https://github.com/user-attachments/assets/c47834a3-fe88-44ed-be7e-7cee97bcb303)
-
-  - Click on **"Select a chaos Infrastructure"**
-
- 
-4. On the popup window select the available options
-
-| Input                        | Value|  
-| ---------------------------- | ------ |
-| Select Environment|prod|
-| Select Infrastructure|k8s|
-
-5. Click on next to navigate to the experiment builder
-6. Click on **Add Fault**
-7. From the list of available faults select **Pod Network Corruption**
-8. From the navigation bar select **Target Application**
-
-| Input                        | Value | Notes |
-| ---------------------------- | ------ | -------|
-| Target Workload Kind|deployment||
-| Target Workload Namespace ||**Select the namespace available from the dropdown**|
-| Target Workload Names | Pick the backend deployment name|We will change that later |
-|Target Workload Labels | leave empty||
-
-
-9. From the navigation bar select **Tune Fault**
-
-| Input       | Value |
-| ----------- | ----- |
-| Total Chaos Duration |150|
-| Network Packet Corruption Percentage |100|
-10. Click on **Apply Changes** and then **Save**
-11. Run the experiment and observe the logs. 
-12. While the experiment is running navigate to the application's endpoint (see image below)
-13. Observe the network errors
-
-| project                | domain        | suffix |
-| ---------------------- | ------------- | ------ |
-| http\://\<project\_id>|.cie-bootcamp|.co.uk|
-
-<img width="1415" height="205" alt="image" src="https://github.com/user-attachments/assets/cb85c608-bfbb-4ec5-b179-c6ebd6ff394c" />
-
-
-**Validate the health automatically**
-
-1. From the left hand menu, go to **Project Settings**
-2. Select **Chaos Probles**
-3. Create a new probe by clicking **+ New Probe**
-4. Select the HTTP probe
-   
-| Field                | Value        | Notes |
-| ---------------------- | ------------- | ------ |
-| http\://\<project\_id>.cie-bootcamp.co.uk |||
-| Criteria | == | | 
-| Response Code | 200 | | 
-
-5. Move to the next tab **Configure Properties**
-
-
-| Field                | Value        | Notes |
-| ---------------------- | ------------- | ------ |
-| Timeout | 20s ||
-| Interval | 2s | | 
-| Attempt | 5 | | 
-| Initial Delay | 5s ||
-
-Now that we have our probe navigate to **Chaos Testing**
-Drill down to the **network-latency** experiment
-
-Hovering over the network fault we can add our newly created probe 
-Select **+ Add a parallel node -> Add a probe**
-
-<img width="519" height="354" alt="image" src="https://github.com/user-attachments/assets/519fc841-bbf1-4480-a01c-4583eab0b208" />
-
-Save and rerun the experiment 
-Observe the **logs** of the probe **Resilience Score** generated in comparisson to the previous execution
-
-
-
----------------
-
-**Create Experiments manually**
-
-1. From the left hand menu, go to **Chaos Testing**
-2. Select **+New Experiment**
-
-| Input                        | Value|  
-| ---------------------------- | ------ |
-| Name                         |pod-memory|
-
-3. Select **Harness Infra**
-
-  ![Screenshot 2024-11-28 at 14 24 21](https://github.com/user-attachments/assets/c47834a3-fe88-44ed-be7e-7cee97bcb303)
-
-  - Click on **"Select a chaos Infrastructure"**
-
- 
-4. On the popup window select the available options
-
-| Input                        | Value|  
-| ---------------------------- | ------ |
-| Select Environment|prod|
-| Select Infrastructure|k8s|
-
-5. Click on next to navigate to the experiment builder
-6. Click on **Add Fault**
-7. From the list of available faults select **Pod Memory Hog**
-8. From the navigation bar select **Target Application**
-
-| Input                        | Value | Notes |
-| ---------------------------- | ------ | -------|
-| Target Workload Kind|deployment||
-| Target Workload Namespace ||**Select the namespace available from the dropdown**|
-| Target Workload Names | Pick the backend deployment name|We will change that later |
-|Target Workload Labels | leave empty||
-
-
-9. From the navigation bar select **Tune Fault**
-
-| Input       | Value |
-| ----------- | ----- |
-| Total Chaos Duration |600|
-| Memory Consumption |300|
-| Number of workers |1|
-| Pod affected percentage|100|
-
-10. Click on **Apply Changes** and then **Save**
-
-
-**Change target service to canary using YAML**
-
-1. From the pipeline visual editor switch to yaml
-2. Click the edit button to go into edit mode
-3. Locate the service name (set on previous state) **TARGET_WORKLOAD_NAMES**
-4. Replace it with **backend-<project_name>-deployment-canary** where project_name is the harness project. Summary: add the suffic **-canary** to the target workload
-5. Save the experiment
-
-
-**Embed chaos experiments into CD pipelines**
-
-1. From the module selection menu select Continuous Delivery & GitOps
-
-
-   ![Screenshot 2024-11-28 at 14 07 22](https://github.com/user-attachments/assets/898ee27b-7369-47c6-a145-e74b49bb4bed)
-
-   
-2. From the left hand side menu select pipelines and drill down to the existing pipeline
-
-3. In the existing pipeline, within the Deploy backend stage **after** Canary Deployment and **before** the approval step click on the plus icon to add a new step
-
-4. Add a **Verify** step with the following configuration
+2. Add a **Verify** step with the following configuration
 
 | Input                        | Value  | Notes                                                                                            |
 | ---------------------------- | ------ | ------------------------------------------------------------------------------------------------ |
 | Name                         |Verify|                                                                                                  |
 | Continuous Verification Type |Canary|                                                                                                  |
 | Sensitivity                  |Low| This is to define how sensitive the ML algorithms are going to be on deviation from the baseline |
-| Duration                     |10mins|                                                                                                  |
+| Duration                     |5mins|                                                                                                  |
 
-5. Under the verify step click on the plus icon to add a new step in parallel
-
-
-   ![Screenshot 2024-11-28 at 14 28 38](https://github.com/user-attachments/assets/368ba808-d303-43f8-8824-5d2e09367b01)
-
-   
-6. Add a **chaos** step with the following configuration
-
-| Input                        | Value  |
-| ---------------------------- | ------ |
-| Name                         |Chaos|
-| Select Chaos Experiment |pod-memory|
-|  Expected Resilience Score|50| 
-
-7. Click on Apply Changes
-
-8. Click **Save** and then click **Run** to execute the pipeline with the following inputs.
+Click **Save** and then click **Run** to execute the pipeline with the following inputs. As a bonus, save your inputs as an Input Set before executing (see below)
 
 | Input       | Value | Notes       |
 | ----------- | ----- | ----------- |
 | Branch Name |main| Leave as is |
 
-9. After 10 minutes review what happened with the execution 
 
-# Lab 6 - Validate Release
+# Lab 7 - Validate Release
 
 **Learning Objective(s):**
 
@@ -565,9 +432,6 @@ Observe the **logs** of the probe **Resilience Score** generated in comparisson 
 
 - Use complex deployment strategies to reduce the blast radius
 
-**Outcomes**
-- Force failure of continuous delivery validation using chaos engineering
-
 **Steps**:
 
 - While the canary deployment is ongoing navigate to the web page and see if you can spot the canary (use the check release button) 
@@ -576,24 +440,22 @@ Observe the **logs** of the probe **Resilience Score** generated in comparisson 
 | ---------------------- | ------------- | ------ |
 | http\://\<project\_id>|.cie-bootcamp|.co.uk|
 
-- Drill down to the distribution test tab and run the traffic generation by clicking the **Start** button
+- Drill down to the distribution test tab and run the traffic generation by clicking the **Play** button
 
 - Observe the traffic distribution
 
 - Validate the outcome of the verification on the pipeline execution details
-
 
 \
 ![](https://lh7-us.googleusercontent.com/docsz/AD_4nXdbAmEJ5zQPsKlw_nEknWvYo97pm5eWCXr6vU8-GgIL0ulAOSH9N07PoEcVSknARVQo7Tgj1s31VHqR1I3hu2dMIO1rIX5HHcmTPXoQPoyo8CPv13OhnJN5WVcZqSwUXzdDHmm3PxUnhtpGVl0PAMJ_1wnuodvUbVPBOdnGKQ?key=cRG2cvp_PHVW0KG2Gq6Y_A)
 ![](https://lh7-us.googleusercontent.com/docsz/AD_4nXf-5oWX9OfvdmEb9MBm2_h2KKAa_QwmiJoM0fiKrTuxAr6GR4wxeulSlk48gyBK3dykrtIslDSkxpiGytrxH0JaxaQ4ZgTYxbmc8OenAH3nhGCvvOAxkWVjVBp1TRg_qQQi9z8OrNPK4udPtNL1LIyym6Ch5IMzrulFOcXhOQ?key=cRG2cvp_PHVW0KG2Gq6Y_A)
 
 **Bonus**:
-- If the verification fails harness defaults to a manual intervention, you can now decide what you want to happen next (rollback, ignore etc.) 
 
 - Add a canary rollout from 10% to 50% traffic and see how this impacts the traffic distribution
 
 
-# Lab 7 - Governance/Policy as Code
+# Lab 8 - Governance/Policy as Code
 
 ### Summary: Create and apply policies as code in order to enable governance and promote self-service. In Lab 2 we saw how a user is impacted by policies in place, now is the time to create such policies
 
@@ -652,7 +514,7 @@ Observe the **logs** of the probe **Resilience Score** generated in comparisson 
 10. Click **Save** and note that the save succeeds without any policy failure
 
 
-# Lab 8 - Governance/Policy as Code (Advanced)
+# Lab 9 - Governance/Policy as Code (Advanced)
 
 **Create a Policy to block critical CVEs**
 

@@ -1,0 +1,8 @@
+.custom-modal .modal-content {
+    z-index: 1050 !important; /* Adjust this value as needed */
+  }
+  
+  .custom-modal-backdrop {
+    z-index: 1040 !important; /* Ensure the backdrop is behind the modal */
+  }
+  

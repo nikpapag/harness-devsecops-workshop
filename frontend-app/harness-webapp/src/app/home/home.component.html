@@ -1,0 +1,135 @@
+
+
+<div class="container" style="background-color: black; width:100%">
+	<div class="row">
+  
+		<div class="col">
+			<div class="weather-card one" style="background-color:black">
+				<div class="top">
+          @if(checkValue()){
+            <div class="wrapper"  style=" background: linear-gradient(to bottom, black, rgba(0, 128, 0, 0.247) 50%, black);height: 600px; ">
+              <div class="mynav">
+                <a href="javascript:;"><span class="lnr lnr-chevron-left"></span></a>
+                <a href="javascript:;"><span class="lnr lnr-cog"></span></a>
+              </div>
+              <h1 class="heading" style="color: rgb(255, 255, 255);">Events</h1>
+
+              
+
+              <div style="margin-top:10%">
+                <p style="color:white">
+                  Discover DevOps innovations with Harness at worldwide events, reshaping the future of modern software delivery.
+                </p>
+
+              </div>
+    
+
+            </div>
+
+
+          }
+         
+
+         @if(isCanary){
+              <div class="wrapper"  style="background: url('../../assets/canary-standing.png');height: 600px; ">
+                <div class="mynav">
+                  <a href="javascript:;"><span class="lnr lnr-chevron-left"></span></a>
+                  <a href="javascript:;"><span class="lnr lnr-cog"></span></a>
+                </div>
+                <h1 class="heading" style="color: rgb(28, 198, 28);">{{serviceName}}</h1>
+                <div class="weather-card" style="background-color: rgba(58, 133, 218, 0.758); margin-top:200px; height: 100px;
+                width: 350px;">
+                              <h1 class="heading" style="font-size: 20px;color: rgb(28, 198, 28);">Version</h1>
+                              <h3 class="location" style="font-size: 16px;">{{applicationVersion}}</h3>
+
+                </div>
+
+                <div class="weather-card" style="background-color:  rgba(58, 133, 218, 0.758);  height: 100px;
+                width: 350px;">
+                              <h1 class="heading" style="font-size: 20px;color: rgb(28, 198, 28);">Last Execution</h1>
+                              <h3 class="location" style="font-size: 16px;">{{lastExecution}}</h3>
+
+                </div>
+
+
+              </div>
+
+
+            }
+          @else {
+              <div class="wrapper"   style=" background: linear-gradient(to bottom, black, rgba(0, 34, 128, 0.598) 50%, black);height: 600px; ">
+
+
+                  <div class="mynav">
+                    <a href="javascript:;"><span class="lnr lnr-chevron-left"></span></a>
+                    <a href="javascript:;"><span class="lnr lnr-cog"></span></a>
+                  </div>
+                  <h1 class="heading" style="color: #FFFFFF">{{serviceName}}</h1>
+  
+                  <div class="weather-card" style="background-color: #ffffff20;   height: 100px;
+                  width: 350px;">
+                                <h1 class="heading" style="font-size: 20px;color: #FFFFFF">Version</h1>
+                                <h3 class="location" style="font-size: 16px;">{{applicationVersion}}</h3>
+  
+                  </div>
+  
+                  <div class="weather-card" style="background-color:  #ffffff20;  height: 100px;
+                  width: 350px;">
+                                <h1 class="heading" style="font-size: 20px;color:#FFFFFF ">Last Execution</h1>
+                                <h3 class="location" style="font-size: 16px;">{{lastExecution}}</h3>
+  
+                  </div>
+  
+       
+
+              </div>
+
+
+
+            }
+
+          </div>
+          @if  (!checkValue()) {
+            <div class="bottom" >
+              <button type="button" class="btn btn-success" style="width:90%;margin:5%" (click)="checkRelase()">Check Release</button>
+            </div>
+          }
+          @else {
+
+            <div class="bottom" >
+              <a href="https://www.harness.io/events"  class="btn btn-success" style="width:90%;margin:5%">Learn more</a>
+             
+            </div>
+          }
+
+
+        </div>
+
+		</div>
+
+		<div class="col">
+			<div class="weather-card rain" style="background-color: black;">
+
+				<div class="top">
+					<div class="wrapper">
+						<div class="mynav">
+							<a href="javascript:;"><span class="lnr lnr-chevron-left"></span></a>
+							<a href="javascript:;"><span class="lnr lnr-cog"></span></a>
+						</div>
+						<h1 class="heading">Distribution Test</h1>
+						<h3 class="location">Synthetic Test</h3>
+						<p class="temp">
+
+						</p>
+					</div>
+				</div>
+				<div class="bottom">
+				<button type="button" class="btn btn-success" style="width:90%;margin:5%" (click)="distribution()" >Start</button>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>

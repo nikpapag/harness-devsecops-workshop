@@ -1,0 +1,123 @@
+{{- if .Values.env.config}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- if lower .Values.sename}}
+  name: {{lower .Values.name}}-{{lower .Values.sename}}-cm
+  {{- else}}
+  name: {{lower .Values.name}}
+  {{- end}}
+data:
+{{.Values.env.config | toYaml | indent 2}}
+---
+{{- end}}
+
+{{- if .Values.env.secrets}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{lower .Values.name}}
+stringData:
+{{.Values.env.secrets | toYaml | indent 2}}
+---
+{{- end}}
+
+{{- if .Values.dockercfg}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{lower .Values.name}}-dockercfg
+  annotations:
+    harness.io/skip-versioning: "true"
+data:
+  .dockercfg: {{.Values.dockercfg}}
+type: kubernetes.io/dockercfg
+---
+{{- end}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  {{- if lower .Values.sename}}
+  name: {{lower .Values.name}}-{{lower .Values.sename}}-deployment
+  {{- else}}
+  name: {{lower .Values.name}}-deployment
+  {{- end}}
+  labels:
+  {{- if lower .Values.sename}}
+    app: {{lower .Values.name}}-{{ lower .Values.sename}}
+  {{- else }}
+    app: {{lower .Values.name}}
+  {{- end}}
+spec:
+  replicas: {{int .Values.replicas}}
+  selector:
+    matchLabels:
+    {{- if lower .Values.sename}}
+      app: {{lower .Values.name}}-{{ lower .Values.sename}}
+    {{- else }}
+      app: {{lower .Values.name}}
+    {{- end }}
+  template:
+    metadata:
+      labels:
+      {{- if lower .Values.sename}}
+        app: {{lower .Values.name}}-{{ lower .Values.sename}}
+      {{- else }}
+        app: {{lower .Values.name}}
+      {{- end}}
+    spec:
+    {{- if .Values.dockercfg}}
+      imagePullSecrets:
+      - name: {{lower .Values.name}}-dockercfg
+      {{- end}}
+      containers:
+      {{- if lower .Values.sename}}
+      - name: {{lower .Values.name}}-{{ lower .Values.sename}}
+      {{- else}}
+      - name: {{lower .Values.name}}
+      {{- end}}
+        image: {{.Values.image}}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 0
+        {{- if or .Values.env.config .Values.env.secrets}}
+        envFrom:
+        {{- if .Values.env.config}}
+        - configMapRef:
+            {{- if lower .Values.sename}}
+            name: {{lower .Values.name}}-{{lower .Values.sename}}-cm
+            {{- else}}
+            name: {{lower .Values.name}}
+            {{- end}}
+        {{- end}}
+        {{- if .Values.env.secrets}}
+        - secretRef:
+            name: {{lower .Values.name}}
+        {{- end}}
+        {{- end}}
+      nodeSelector:
+        cloud.google.com/gke-nodepool: deploy-pool
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+{{- if lower .Values.sename}}
+  name: web-{{lower .Values.name}}-{{ lower .Values.sename}}-svc
+{{- else }}
+  name: web-{{ lower .Values.name}}-svc
+{{- end }}
+spec:
+  type: ClusterIP
+  ports:
+  - port: {{ .Values.servicePort }}
+    targetPort: {{ .Values.serviceTargetPort }} 
+    protocol: TCP
+  selector:
+  {{- if lower .Values.sename }}
+    app: {{lower .Values.name}}-{{lower .Values.sename}}
+  {{- else }}
+    app: {{lower .Values.name}}
+ {{- end }}
+ 

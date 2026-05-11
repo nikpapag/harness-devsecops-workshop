@@ -1,0 +1,53 @@
+<div class="container" style="background-color: black; width:600px">
+  <div class="row" style="width:200px">
+    <div class="col">
+      <button class="btn" (click)="run()" style="margin:0;padding:0"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="45" fill="#FFFFFF" class="bi bi-play-btn" viewBox="0 0 16 16">
+        <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"/>
+        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+      </svg></button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn"  (click)="refreshDistribution()" style="margin:0;padding:0; margin-top:7px;"><svg style="border: 2px solid white; border-radius: 5px;" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFFFFF" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+      </svg></button>
+    </div>
+  </div>
+
+  <div class="row">
+		<div class="col">
+			<div class="weather-card one" style="background-color:black">
+				<div class="top">
+					<div class="wrapper">
+            <div style="height: 300px; width:700px; background-color: black;">
+              <ngx-charts-line-chart
+                [scheme]="colorScheme"
+                [results]="data"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="true"
+                [customColors]="customColor"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="false"
+                style="fill: white;"
+                xAxisLabel="Time"
+                yAxisLabel="Number of Entries">
+              </ngx-charts-line-chart>
+
+            </div>
+
+					</div>
+
+				</div>
+
+          <div class="bottom" style="margin-top:0px">
+
+
+
+			</div>
+		</div>
+
+
+
+
+</div>
