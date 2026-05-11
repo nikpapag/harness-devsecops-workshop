@@ -8,13 +8,12 @@ metadata:
  {{- end }}
  annotations:
    kubernetes.io/ingress.class: nginx
-   kubernetes.io/ingress.global-static-ip-name: "bootcamp-static-ip"
 spec:
   rules:
   {{- if lower .Values.sename}}
-  - host: {{ lower .Values.sename }}.backend.cie-bootcamp.co.uk
+  - host: {{ lower .Values.sename }}.backend.static.harnessevents.com
   {{- else }}
-  - host: backend.cie-bootcamp.co.uk
+  - host: backend.static.harnessevents.com
   {{- end }}
     http:
      paths:
