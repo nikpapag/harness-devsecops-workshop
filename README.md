@@ -56,7 +56,7 @@ In this lab, the user sets up a CI pipeline that runs source code tests, builds 
 | ---------- | ----------------------  | ----- |
 | Stage Name | <pre>`Build`</pre>||
 | Clone Codebase | Enabled ||
-| Repository Name | <pre>`harnessrepo`</pre>||
+| Repository Name | <pre>`harness-devsecops`</pre>||
 |`                `|`                            `|`                `|
 
 ---
