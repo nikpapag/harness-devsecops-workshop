@@ -96,8 +96,6 @@ spec:
             name: {{lower .Values.name}}
         {{- end}}
         {{- end}}
-      nodeSelector:
-        cloud.google.com/gke-nodepool: deploy-pool
 
 ---
 apiVersion: v1
