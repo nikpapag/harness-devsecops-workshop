@@ -240,6 +240,7 @@ In this lab, the user extends the existing pipeline to take the artifact built i
 ### Step 2: Configure Service
 1. Click **+ Add Service** and configure as follows:
 
+
 | Input      | Value     | Notes |
 | ---------- | ----------------------  | ----- |
 | Name | <pre>`frontend`</pre>||
@@ -248,7 +249,7 @@ In this lab, the user extends the existing pipeline to take the artifact built i
 | Manifest Type | K8s Manifest ||
 | K8s Manifest Store | Code ||
 | Manifest Identifier | <pre>`templates`</pre>||
-| Repository | <pre>`harnessrepo`</pre>||
+| Repository | <pre>`harness-devsecops`</pre>||
 | Branch | <pre>`main`</pre>||
 | File/Folder Path | <pre>`harness-deploy/frontend/manifests`</pre>||
 | Values.yaml | <pre>`harness-deploy/frontend/values.yaml`</pre>||
