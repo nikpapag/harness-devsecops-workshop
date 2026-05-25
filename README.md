@@ -126,20 +126,9 @@ Navigate to the **Execution** tab and add the following steps:
 | Branch Name | <pre>`main`</pre>| Prepopulated |
 |`                `|`                            `|`                `|
 
-Verify that:
-- Tests run successfully
-- The application compiles
-- The Docker image is pushed to the registry
+> [!NOTE]
+> Pipeline wont start, can you identify why?
 
----
-
-## Value Callouts
-
-| Aspect | Description |
-| :--- | :--- |
-| **Developer Velocity** | Automated builds remove manual steps and reduce time to deployment. |
-| **Quality Gates** | Tests run automatically before artifacts are created, catching issues early. |
-| **Artifact Traceability** | Every build is tagged and traceable back to the source commit. |
 
 
 ## Lab 2: DevSecOps
