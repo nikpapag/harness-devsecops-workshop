@@ -126,8 +126,9 @@ Navigate to the **Execution** tab and add the following steps:
 | Branch Name | <pre>`main`</pre>| Prepopulated |
 |`                `|`                            `|`                `|
 
-> [!NOTE]
-> Pipeline wont start, can you identify why?
+> [!WARNING]
+> Pipeline execution is rejected by the policy engine, let's create a compliant pipeline
+> Proceed to the Lab 2: DevSecOps
 
 
 
