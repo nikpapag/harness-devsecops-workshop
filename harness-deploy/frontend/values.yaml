@@ -12,7 +12,7 @@ namespace: <+infra.namespace>
 # Possible values for ServiceType are:
 # ClusterIP | NodePort | LoadBalancer | ExternalName
 serviceType: ClusterIP
-
+workshop_domain: <+variable.lab_subdomain>
 sename: <+variable.username>
 # A Service can map an incoming port to any targetPort.
 # targetPort is where application is listening on inside the container.
