@@ -11,9 +11,9 @@ metadata:
 spec:
   rules:
   {{- if lower .Values.sename}}
-  - host: {{ lower .Values.sename }}.backend.static.harnessevents.com
+  - host: {{ lower .Values.sename }}.backend.{{lower .Values.workshop_domain}}.harnessevents.com
   {{- else }}
-  - host: backend.static.harnessevents.com
+  - host: backend.{{lower .Values.workshop_domain}}.harnessevents.com
   {{- end }}
     http:
      paths:
