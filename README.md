@@ -384,10 +384,12 @@ The target infrastructure has been pre-created and was used in the previous stag
 |`                `|`                            `|`                `|
 
 2. While the canary deployment is ongoing and waiting for approval, navigate to the web page and see if you can spot the canary (use the check release button)
+3. From the left hand side menu navigate to project settings
+4. Select **project variables**
+5. The url can exist within the **lab_endpoint** variable 
+<img width="1692" height="302" alt="image" src="https://github.com/user-attachments/assets/5a215845-eadc-479d-9c81-5185bf039243" />
 
-| Component | Value |
-| --------- | ----- |
-| URL Format | <pre>`http://<project_id>.cie-bootcamp.co.uk`</pre> |
+
 
 ![](https://lh7-us.googleusercontent.com/docsz/AD_4nXfmb1N3lAe0EOnEun9neU9y3ilqy3HbxfnWfUMzF3FsykslwgQfU_W4pE0wlt5kYSp6_mTs7cVP0anhJ7uvtsytal2qX3ZEq3vvOT3DOBUzE9SZ3rpwkAHP6e_ExdRbo5VmN2kpxdFlp6u8iGaKwhW_uyAohEmJurkjmEB2Ww?key=cRG2cvp_PHVW0KG2Gq6Y_A)
 
@@ -419,13 +421,14 @@ In this lab, the user validates canary deployments by observing traffic distribu
 ### Step 1: Observe Canary Traffic
 1. While the canary deployment is ongoing, navigate to the web page
 
-| Component | Value |
-| --------- | ----- |
-| URL Format | <pre>`http://<project_id>.cie-bootcamp.co.uk`</pre> |
+3. From the left hand side menu navigate to project settings
+4. Select **project variables**
+5. The url can exist within the **lab_endpoint** variable 
+<img width="1692" height="302" alt="image" src="https://github.com/user-attachments/assets/5a215845-eadc-479d-9c81-5185bf039243" />
 
-2. Drill down to the **Distribution Test** tab
-3. Click the **Start** button to run traffic generation
-4. Observe the traffic distribution between canary and stable instances
+6. Drill down to the **Distribution Test** tab
+7. Click the **Start** button to run traffic generation
+8. Observe the traffic distribution between canary and stable instances
 
 ---
 
