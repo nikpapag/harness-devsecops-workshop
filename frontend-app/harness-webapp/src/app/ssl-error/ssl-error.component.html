@@ -1,0 +1,54 @@
+<div class="ssl-error-container">
+  <div class="ssl-error-content">
+    <div class="error-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+
+    <h1>Your connection is not private</h1>
+
+    <p class="error-description">
+      Attackers might be trying to steal your information from this site
+      (for example, passwords, messages, or credit cards).
+    </p>
+
+    <div class="error-code">
+      <strong>{{ errorCode }}</strong>
+    </div>
+
+    <div class="error-details">
+      <p>
+        This server could not prove that it is secure; its security certificate
+        is not trusted by your device's operating system. This may be caused by
+        a misconfiguration or an attacker intercepting your connection.
+      </p>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-primary" (click)="goBack()">
+        Go Back
+      </button>
+      <button class="btn-secondary" (click)="reloadPage()">
+        Reload
+      </button>
+    </div>
+
+    <div class="advanced-info">
+      <details>
+        <summary>Advanced</summary>
+        <div class="advanced-content">
+          <p><strong>Subject:</strong> localhost</p>
+          <p><strong>Issuer:</strong> Unknown Certificate Authority</p>
+          <p><strong>Expires on:</strong> N/A</p>
+          <p><strong>Current date:</strong> {{ getCurrentDate() }}</p>
+          <p class="warning-text">
+            This certificate cannot be verified. Proceed at your own risk.
+          </p>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
