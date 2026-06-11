@@ -386,8 +386,8 @@ The target infrastructure has been pre-created and was used in the previous stag
 ---
 
 ### Step 6: Replace manual approval with continuous verification
-1. Edit the exisiting pipeline 
-2. Select the backend stage and find the **Harness Approval** between the Canary Deploy and Canary Destory steps
+1. Edit the existing pipeline 
+2. Select the backend stage and find the **Harness Approval** between the Canary Deploy and Canary Destroy steps
 3. Delete the **Harness Approval** step
 4. **After** the canary deployment and **before** the canary delete step, add a **Verify** step 
 
