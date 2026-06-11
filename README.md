@@ -385,6 +385,28 @@ The target infrastructure has been pre-created and was used in the previous stag
 
 ---
 
+### Step 6: Replace manual approval with continuous verification
+1. Edit the exisiting pipeline 
+2. Select the backend stage and find the **Harness Approval** between the Canary Deploy and Canary Destory steps
+3. Delete the **Harness Approval** step
+4. **After** the canary deployment and **before** the canary delete step, add a **Verify** step 
+
+| Input      | Value     | Notes |
+| ---------- | ----------------------  | ----- |
+| Name | <pre>`Verify`</pre>||
+| Continuous Verification Type | Canary ||
+| Duration | 5 min ||
+|`                `|`                            `|`                `|
+
+5. Click **Save** and then click **Run** to execute the pipeline
+
+| Input      | Value     | Notes |
+| ---------- | ----------------------  | ----- |
+| Branch Name | <pre>`main`</pre>||
+|`                `|`                            `|`                `|
+
+---
+
 ## Value Callouts
 
 | Aspect | Description |
@@ -399,7 +421,6 @@ The target infrastructure has been pre-created and was used in the previous stag
 ## Key Outcomes
 - Identify traffic differences between normal and canary instances  
 - Automate release validation  
-- Force failure of continuous delivery validation using chaos engineering  
 
 ## Overview
 In this lab, the user validates canary deployments by observing traffic distribution and monitoring application behavior during progressive rollouts.
@@ -444,8 +465,6 @@ In this lab, the user validates canary deployments by observing traffic distribu
 | :--- | :--- |
 | **Automated Validation** | Harness validates deployments automatically, reducing manual testing. |
 | **Traffic Shaping** | Canary deployments allow controlled traffic distribution for risk mitigation. |
-| **Chaos Engineering** | Introducing failures validates resilience and rollback mechanisms. |
-
 
 ## Lab 6: Governance / Policy as Code
 
