@@ -484,14 +484,30 @@ In this lab, the user creates and applies policies as code to enable governance 
 1. From the secondary menu, select **Project Settings**
 2. Under Security & Governance Select **Policies**
 3. Click **New Policy**
-4. Enter new policy name 
-5. From the suggested list, select **Pipeline - Approval** and click **Next**
-6. Click **Next: Enforce Policy**
-7. Set the values according to the table below and confirm
+4. Enter new policy name
 
 | Input      | Value     | Notes |
 | ---------- | ----------------------  | ----- |
 | Policy Name | <pre>`Production Approvals`</pre> ||
+|`                `|`                            `|`                `|
+
+6. Click Apply
+7. From the suggested list , select **Pipeline - Approval** and click **Use This Sample**
+8. Click **Save**
+9. Click **Policy Sets** 
+10. Click **New Policy Set**
+11. Click **Continue**
+12. Click **+Add Policy**
+13. Select **Production Approvals**
+15. Select **Error & Exit** for failure strategy
+16. Click **Apply**
+17. Click **Finish**
+
+Set the values according to the table below and confirm
+| Input      | Value     | Notes |
+| ---------- | ----------------------  | ----- |
+| Name | <pre>`Production Policies`</pre> ||
+| Entity Type | Pipeline ||
 | Trigger Event | On Run ||
 | Failure Strategy | Error & exit ||
 |`                `|`                            `|`                `|
