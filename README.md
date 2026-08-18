@@ -482,14 +482,16 @@ In this lab, the user creates and applies policies as code to enable governance 
 
 ### Step 1: Create a Policy to Require Approvals
 1. From the secondary menu, select **Project Settings**
-2. Select **Governance Policies**
-3. Click **Build a Sample Policy**
-4. From the suggested list, select **Pipeline - Approval** and click **Next**
-5. Click **Next: Enforce Policy**
-6. Set the values according to the table below and confirm
+2. Under Security & Governance Select **Policies**
+3. Click **New Policy**
+4. Enter new policy name 
+5. From the suggested list, select **Pipeline - Approval** and click **Next**
+6. Click **Next: Enforce Policy**
+7. Set the values according to the table below and confirm
 
 | Input      | Value     | Notes |
 | ---------- | ----------------------  | ----- |
+| Policy Name | <pre>`Production Approvals`</pre> ||
 | Trigger Event | On Run ||
 | Failure Strategy | Error & exit ||
 |`                `|`                            `|`                `|
