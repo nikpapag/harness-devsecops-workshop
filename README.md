@@ -503,6 +503,7 @@ In this lab, the user creates and applies policies as code to enable governance 
 15. Select **Error & Exit** for failure strategy
 16. Click **Apply**
 17. Click **Finish**
+18. Toggle **enabled** for the **
 
 Set the values according to the table below and confirm
 | Input      | Value     | Notes |
@@ -600,7 +601,9 @@ deny[sprintf("Node OSS Can't contain any critical vulnerability '%d'", [input.NO
 | Policy to Evaluate | Runtime OWASP CVEs ||
 |`                `|`                            `|`                `|
 
-3. Toggle the **Enforced** button
+3. Click **Apply**
+4. Click **Finish**
+5. Toggle the **Enforced** button
 
 ---
 
