@@ -482,14 +482,34 @@ In this lab, the user creates and applies policies as code to enable governance 
 
 ### Step 1: Create a Policy to Require Approvals
 1. From the secondary menu, select **Project Settings**
-2. Select **Governance Policies**
-3. Click **Build a Sample Policy**
-4. From the suggested list, select **Pipeline - Approval** and click **Next**
-5. Click **Next: Enforce Policy**
-6. Set the values according to the table below and confirm
+2. Under Security & Governance Select **Policies**
+3. Click **New Policy**
+4. Enter new policy name
+6. Click Apply
+7. From the suggested list , select **Pipeline - Approval** and click **Use This Sample**
+8. Click **Save**
 
 | Input      | Value     | Notes |
 | ---------- | ----------------------  | ----- |
+| Policy Name | <pre>`Production Approvals`</pre> ||
+|`                `|`                            `|`                `|
+
+
+10. Click **Policy Sets** 
+11. Click **New Policy Set**
+12. Click **Continue**
+13. Click **+Add Policy**
+14. Select **Production Approvals**
+15. Select **Error & Exit** for failure strategy
+16. Click **Apply**
+17. Click **Finish**
+18. Toggle **enabled** for the **
+
+Set the values according to the table below and confirm
+| Input      | Value     | Notes |
+| ---------- | ----------------------  | ----- |
+| Policy Set Name | <pre>`Production Policies`</pre> ||
+| Entity Type | Pipeline ||
 | Trigger Event | On Run ||
 | Failure Strategy | Error & exit ||
 |`                `|`                            `|`                `|
@@ -581,7 +601,9 @@ deny[sprintf("Node OSS Can't contain any critical vulnerability '%d'", [input.NO
 | Policy to Evaluate | Runtime OWASP CVEs ||
 |`                `|`                            `|`                `|
 
-3. Toggle the **Enforced** button
+3. Click **Apply**
+4. Click **Finish**
+5. Toggle the **Enforced** button
 
 ---
 
