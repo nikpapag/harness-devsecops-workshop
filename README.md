@@ -642,3 +642,6 @@ deny[sprintf("Node OSS Can't contain any critical vulnerability '%d'", [input.NO
 | **Runtime Enforcement** | Policies evaluate real scan results, not just configuration. |
 | **Risk Mitigation** | High-severity issues are caught before deployment, reducing attack surface. |
 | **Compliance Automation** | Security policies are enforced consistently across all pipelines without manual oversight. |
+
+
+## Lab 9: Worker Agents
